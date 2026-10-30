@@ -1,7 +1,7 @@
 {
   "name": "elearning-student-id-card-server",
-  "version": "1.0.0",
-  "description": "Student ID Card Collection Portal & Admin Batch Studio with built-in database",
+  "version": "2.0.0",
+  "description": "Fast Bilingual (100% Bangla & 100% English) Student ID Card Portal & Admin Batch Print Studio",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;500;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Galada&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Mina:wght@400;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
       --card-font: 'Noto Serif Bengali', 'Tiro Bangla', serif;
@@ -185,37 +185,49 @@
     /* Print A4 Exact CR80 (85.6mm x 54mm) Layout */
     @page {
       size: A4 portrait;
-      margin: 6mm;
+      margin: 5mm;
     }
     @media print {
-      body * {
-        visibility: hidden;
+      html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      body > *:not(#print-sheet-area) {
+        display: none !important;
       }
       #print-sheet-area, #print-sheet-area * {
-        visibility: visible;
+        visibility: visible !important;
       }
       #print-sheet-area {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 198mm;
-        background: white !important;
-        padding: 2mm;
         display: grid !important;
-        grid-template-columns: repeat(2, 85.6mm);
-        grid-auto-rows: 54mm;
-        gap: 4mm 6mm;
-        justify-content: center;
-        align-content: start;
+        position: static !important;
+        width: 198mm !important;
+        margin: 0 auto !important;
+        background: #ffffff !important;
+        padding: 2mm !important;
+        grid-template-columns: repeat(2, 85.6mm) !important;
+        grid-auto-rows: 54mm !important;
+        gap: 4mm 6mm !important;
+        justify-content: center !important;
+        align-content: start !important;
       }
       .print-card-slot {
-        width: 85.6mm;
-        height: 54mm;
-        position: relative;
-        overflow: hidden;
-        border: 0.25mm dashed #64748b;
-        page-break-inside: avoid;
-        break-inside: avoid;
+        width: 85.6mm !important;
+        height: 54mm !important;
+        position: relative !important;
+        overflow: hidden !important;
+        border: 0.25mm dashed #64748b !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        box-sizing: border-box !important;
       }
     }
   </style>
@@ -231,15 +243,24 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-            প্রশিক্ষণার্থী আইডি কার্ড স্টুডিও
-            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100% Exact Replica & High-Res</span>
+            <span id="ui-portal-title">প্রশিক্ষণার্থী আইডি কার্ড স্টুডিও</span>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100% Exact &amp; Print Ready</span>
           </h1>
-          <p class="text-xs text-slate-400">যুব উন্নয়ন অধিদপ্তর • ই-লার্নিং অ্যান্ড আর্নিং লিমিটেড (ফ্রিল্যান্সিং প্রশিক্ষণ প্রকল্প)</p>
+          <p id="ui-portal-subtitle" class="text-xs text-slate-400">যুব উন্নয়ন অধিদপ্তর • ই-লার্নিং অ্যান্ড আর্নিং লিমিটেড (ফ্রিল্যান্সিং প্রশিক্ষণ প্রকল্প)</p>
         </div>
       </div>
 
-      <!-- Public Student Badge + Admin Login / Admin Controls -->
+      <!-- Public Student Badge + Language Toggle + Admin Login / Admin Controls -->
       <div class="flex flex-wrap items-center gap-2">
+        <!-- 100% Bangla vs 100% English Toggle -->
+        <div class="inline-flex rounded-lg bg-slate-800 p-0.5 border border-slate-700" title="কার্ড ও ওয়েবসাইটের ভাষা পরিবর্তন করুন">
+          <button id="btn-lang-bn" type="button" class="px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-600 text-white transition">
+            🇧🇩 ১০০% বাংলা
+          </button>
+          <button id="btn-lang-en" type="button" class="px-2.5 py-1 rounded-md text-xs font-bold text-slate-300 hover:text-white transition">
+            🇬🇧 100% English
+          </button>
+        </div>
         <!-- Public Mode Indicator & Admin Login Button -->
         <div id="public-header-bar" class="flex items-center gap-2">
           <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium">
@@ -306,7 +327,7 @@
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2.5 border-b border-slate-800">
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <h2 class="text-xs sm:text-sm font-semibold text-slate-200">আপনার আইডি কার্ডের লাইভ প্রিভিউ (ফর্ম পূরণ করলে এখানে দেখা যাবে)</h2>
+            <h2 id="ui-preview-title" class="text-xs sm:text-sm font-semibold text-slate-200">আপনার আইডি কার্ডের লাইভ প্রিভিউ (ফর্ম পূরণ করলে এখানে দেখা যাবে)</h2>
           </div>
           <div id="admin-preview-controls" class="hidden flex-wrap items-center gap-3 text-xs">
             <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white">
@@ -568,53 +589,79 @@
       <div id="panel-editor" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col gap-4">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
           <div>
-            <h2 class="text-base font-bold text-white">প্রশিক্ষণার্থী আইডি কার্ডের ফর্ম পূরণ করুন</h2>
-            <p class="text-xs text-slate-400">সবগুলো ঘর সঠিকভাবে পূরণ করে নিচে "আইডি কার্ড জমা দিন" বাটনে ক্লিক করুন</p>
+            <h2 id="ui-form-title" class="text-base font-bold text-white">প্রশিক্ষণার্থী আইডি কার্ডের ফর্ম পূরণ করুন</h2>
+            <p id="ui-form-subtitle" class="text-xs text-slate-400">সবগুলো ঘর সঠিকভাবে পূরণ করে নিচে "আইডি কার্ড জমা দিন" বাটনে ক্লিক করুন</p>
           </div>
           <button id="btn-save-to-batch" type="button" class="hidden px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-600 hover:text-white transition">
             + ব্যাচ তালিকায় যোগ করুন
           </button>
         </div>
 
+        <!-- Language (100% Bangla / 100% English) & 6 Word/Print Font Selector Bar -->
+        <div class="bg-slate-950/75 border border-slate-800 rounded-xl p-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label id="ui-lbl-lang-bar" class="block text-[11px] font-bold text-emerald-400 mb-1.5">🌐 কার্ডের ভাষা (100% বাংলা / 100% English)</label>
+            <div class="grid grid-cols-2 gap-1.5 bg-slate-900 p-1 rounded-lg border border-slate-700/80">
+              <button id="btn-form-lang-bn" type="button" class="py-1.5 px-2 rounded-md text-xs font-bold bg-emerald-600 text-white shadow transition">
+                🇧🇩 ১০০% বাংলা
+              </button>
+              <button id="btn-form-lang-en" type="button" class="py-1.5 px-2 rounded-md text-xs font-bold text-slate-300 hover:text-white transition">
+                🇬🇧 100% English
+              </button>
+            </div>
+          </div>
+          <div>
+            <label id="ui-lbl-font-bar" class="block text-[11px] font-bold text-amber-300 mb-1.5">🔤 কার্ড ও Word ফন্ট স্টাইল (৬টি প্রিমিয়াম ফন্ট)</label>
+            <select id="quick-font-select" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-2.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+              <option value="'Noto Serif Bengali', 'Times New Roman', serif" selected>১. অফিশিয়াল ওয়ার্ড সেরিফ (Noto Serif / Times New Roman)</option>
+              <option value="'Tiro Bangla', 'Georgia', serif">২. ক্লাসিক এমএস ওয়ার্ড ফন্ট (Tiro Bangla / Georgia)</option>
+              <option value="'Hind Siliguri', 'Calibri', sans-serif">৩. মডার্ন প্রিন্ট স্যান্স (Hind Siliguri / Calibri Clean)</option>
+              <option value="'Noto Sans Bengali', 'Inter', sans-serif">৪. স্মার্ট কর্পোরেট ফন্ট (Noto Sans / Inter)</option>
+              <option value="'Mina', 'Poppins', sans-serif">৫. রাউন্ডেড স্টাইলিশ ফন্ট (Mina / Poppins)</option>
+              <option value="'Galada', 'Merriweather', serif">৬. ফরমাল ডিসপ্লে ও হেডিং ফন্ট (Galada / Merriweather)</option>
+            </select>
+          </div>
+        </div>
+
         <!-- 8 Input Fields Matching the Card -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div class="sm:col-span-2">
-            <label class="block text-xs font-semibold text-slate-300 mb-1">১. প্রশিক্ষণার্থীর নাম (নামঃ)</label>
+            <label id="ui-lbl-name" class="block text-xs font-semibold text-slate-300 mb-1">১. প্রশিক্ষণার্থীর নাম (নামঃ)</label>
             <input id="inp-name" type="text" placeholder="যেমন: মো: রাকিবুল ইসলাম" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">২. আইডি নাম্বার (আইডি নাম্বারঃ)</label>
-            <input id="inp-id" type="text" placeholder="যেমন: ELEL-BSL-2026-042" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+            <label id="ui-lbl-id" class="block text-xs font-semibold text-slate-300 mb-1">২. আইডি নাম্বার (আইডি নাম্বারঃ)</label>
+            <input id="inp-id" type="text" placeholder="84400071" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">৩. রক্তের গ্রুপ (রক্তের গ্রুপঃ)</label>
-            <input id="inp-blood" type="text" placeholder="যেমন: B+ (বি পজিটিভ)" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+            <label id="ui-lbl-blood" class="block text-xs font-semibold text-slate-300 mb-1">৩. রক্তের গ্রুপ (রক্তের গ্রুপঃ)</label>
+            <input id="inp-blood" type="text" placeholder="B+" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
 
           <div class="sm:col-span-2">
-            <label class="block text-xs font-semibold text-slate-300 mb-1">৪. পিতা/স্বামীর নাম (পিতা/স্বামীর নামঃ)</label>
+            <label id="ui-lbl-father" class="block text-xs font-semibold text-slate-300 mb-1">৪. পিতা/স্বামীর নাম (পিতা/স্বামীর নামঃ)</label>
             <input id="inp-father" type="text" placeholder="যেমন: মো: আবদুল করিম" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">৫. এনআইডি/জন্মসনদ নং</label>
+            <label id="ui-lbl-nid" class="block text-xs font-semibold text-slate-300 mb-1">৫. এনআইডি/জন্মসনদ নং</label>
             <input id="inp-nid" type="text" placeholder="যেমন: ১৯৯৯০৬১২৩৪৫৬৭" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">৬. জেলা (জেলাঃ)</label>
+            <label id="ui-lbl-district" class="block text-xs font-semibold text-slate-300 mb-1">৬. জেলা (জেলাঃ)</label>
             <input id="inp-district" type="text" placeholder="যেমন: বরিশাল" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">৭. মোবাইল নম্বর (মোবাইল নম্বরঃ)</label>
+            <label id="ui-lbl-mobile" class="block text-xs font-semibold text-slate-300 mb-1">৭. মোবাইল নম্বর (মোবাইল নম্বরঃ)</label>
             <input id="inp-mobile" type="text" placeholder="যেমন: ০১৭১২-৩৪৫৬৭৮" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">৮. মেয়াদ (মেয়াদঃ)</label>
+            <label id="ui-lbl-validity" class="block text-xs font-semibold text-slate-300 mb-1">৮. মেয়াদ (মেয়াদঃ)</label>
             <input id="inp-validity" type="text" placeholder="যেমন: ডিসেম্বর ২০২৬" class="w-full rounded-lg bg-slate-800/90 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           </div>
         </div>
@@ -623,14 +670,14 @@
         <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-3.5 flex flex-col gap-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <h3 class="text-xs sm:text-sm font-bold text-emerald-300">ফর্ম পূরণ শেষ হলে প্রিন্টের জন্য জমা দিন</h3>
-              <p class="text-[11px] text-slate-300">জমা দিলে আপনার রেডি আইডি কার্ডটি প্রিন্টের জন্য সরাসরি অ্যাডমিনের কাছে চলে যাবে</p>
+              <h3 id="ui-submit-title" class="text-xs sm:text-sm font-bold text-emerald-300">ফর্ম পূরণ শেষ হলে প্রিন্টের জন্য জমা দিন</h3>
+              <p id="ui-submit-sub" class="text-[11px] text-slate-300">জমা দিলে আপনার রেডি আইডি কার্ডটি প্রিন্টের জন্য সরাসরি অ্যাডমিনের কাছে চলে যাবে</p>
             </div>
             <span id="cloud-status-pill" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">অটো সাবমিশন সক্রিয়</span>
           </div>
           <button id="btn-student-submit" type="button" class="w-full py-3 px-4 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white shadow-lg flex items-center justify-center gap-2 transition">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7"/></svg>
-            আইডি কার্ড জমা দিন (প্রিন্ট শিটে পাঠান)
+            <span id="ui-submit-btn-txt">আইডি কার্ড জমা দিন (প্রিন্ট শিটে পাঠান)</span>
           </button>
 
           <!-- Student Submission Success Banner (Shown after student submits) -->
@@ -661,9 +708,12 @@
             <div>
               <label class="block text-xs text-slate-300 mb-1">ফন্ট স্টাইল (Font Family)</label>
               <select id="ctrl-font-family" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-2.5 py-1.5 text-xs text-white">
-                <option value="'Noto Serif Bengali', serif" selected>Noto Serif Bengali (আসল কার্ডের ফন্ট)</option>
-                <option value="'Tiro Bangla', serif">Tiro Bangla (ক্লাসিক বাংলা সেরিফ)</option>
-                <option value="'Noto Sans Bengali', sans-serif">Noto Sans Bengali (মডার্ন ক্লিন)</option>
+                <option value="'Noto Serif Bengali', 'Times New Roman', serif" selected>১. অফিশিয়াল ওয়ার্ড সেরিফ (Noto Serif / Times New Roman)</option>
+                <option value="'Tiro Bangla', 'Georgia', serif">২. ক্লাসিক এমএস ওয়ার্ড ফন্ট (Tiro Bangla / Georgia)</option>
+                <option value="'Hind Siliguri', 'Calibri', sans-serif">৩. মডার্ন প্রিন্ট স্যান্স (Hind Siliguri / Calibri Clean)</option>
+                <option value="'Noto Sans Bengali', 'Inter', sans-serif">৪. স্মার্ট কর্পোরেট ফন্ট (Noto Sans / Inter)</option>
+                <option value="'Mina', 'Poppins', sans-serif">৫. রাউন্ডেড স্টাইলিশ ফন্ট (Mina / Poppins)</option>
+                <option value="'Galada', 'Merriweather', serif">৬. ফরমাল ডিসপ্লে ও হেডিং ফন্ট (Galada / Merriweather)</option>
               </select>
             </div>
 
@@ -944,10 +994,151 @@
         right: document.getElementById('el-photo-box').src
       };
 
-      // State: Batch of Classmates
+      // State: Language ('bn' = 100% Bangla, 'en' = 100% English) & Batch of Classmates (ID example: 84400071)
+      let currentLang = 'bn';
+
+      const CARD_LANG_PACK = {
+        bn: {
+          hdr1: 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার',
+          hdr2: 'যুব ও ক্রীড়া মন্ত্রণালয়',
+          hdr3: 'যুব উন্নয়ন অধিদপ্তর',
+          projTitle: 'দেশের ৬৪ জেলায় শিক্ষিত কর্মপ্রত্যাশী যুবদের ফ্রিল্যান্সিং প্রশিক্ষণের মাধ্যমে কর্মসংস্থান সৃষ্টি (১ম সংশোধিত) শীর্ষক প্রকল্প',
+          projFontSize: '19.2px',
+          implTitle: 'বাস্তবায়নেঃ ই-লার্নিং অ্যান্ড আর্নিং লিমিটেড',
+          implFontSize: '20.8px',
+          mainHeading: 'প্রশিক্ষণার্থী আইডি কার্ড',
+          mainFontSize: '35px',
+          lblName: 'নামঃ',
+          lblId: 'আইডি নাম্বারঃ',
+          lblFather: 'পিতা/স্বামীর নামঃ',
+          lblBlood: 'রক্তের গ্রুপঃ',
+          lblNid: 'এনআইডি/জন্মসনদ নংঃ',
+          lblDistrict: 'জেলাঃ',
+          lblMobile: 'মোবাইল নম্বরঃ',
+          lblValidity: 'মেয়াদঃ',
+          addr1: 'হেড অফিস:',
+          addr2: 'খাজা আইটি পার্ক (৩য় - ৭ম তলা), ৭ দক্ষিণ কল্যাণপুর,',
+          addr3: 'কল্যাণপুর বাস স্টপ, মিরপুর রোড, ঢাকা-১২০৭',
+          addr4: 'যোগাযোগঃ +৮৮০ ২২২৬ ৬২৪ ৭৭১, +৮৮০ ১৫৫০ ৬৬৬ ৯০০',
+          sigLabel: 'কর্তৃপক্ষের স্বাক্ষর',
+          uiPortalTitle: 'প্রশিক্ষণার্থী আইডি কার্ড স্টুডিও',
+          uiPortalSubtitle: 'যুব উন্নয়ন অধিদপ্তর • ই-লার্নিং অ্যান্ড আর্নিং লিমিটেড (ফ্রিল্যান্সিং প্রশিক্ষণ প্রকল্প)',
+          uiPreviewTitle: 'আপনার আইডি কার্ডের লাইভ প্রিভিউ (ফর্ম পূরণ করলে এখানে দেখা যাবে)',
+          uiFormTitle: 'প্রশিক্ষণার্থী আইডি কার্ডের ফর্ম পূরণ করুন',
+          uiFormSubtitle: 'সবগুলো ঘর সঠিকভাবে পূরণ করে নিচে "আইডি কার্ড জমা দিন" বাটনে ক্লিক করুন',
+          uiLangBar: '🌐 কার্ডের ভাষা (১০০% বাংলা / 100% English)',
+          uiFontBar: '🔤 কার্ড ও Word ফন্ট স্টাইল (৬টি প্রিমিয়াম ফন্ট)',
+          uiLblName: '১. প্রশিক্ষণার্থীর নাম (নামঃ)',
+          uiPhName: 'যেমন: মো: রাকিবুল ইসলাম',
+          uiLblId: '২. আইডি / রোল নাম্বার (আইডি নাম্বারঃ)',
+          uiPhId: '84400071',
+          uiLblBlood: '৩. রক্তের গ্রুপ (রক্তের গ্রুপঃ)',
+          uiPhBlood: 'যেমন: B+',
+          uiLblFather: '৪. পিতা/স্বামীর নাম (পিতা/স্বামীর নামঃ)',
+          uiPhFather: 'যেমন: মো: আবদুল করিম',
+          uiLblNid: '৫. এনআইডি/জন্মসনদ নং',
+          uiPhNid: 'যেমন: ১৯৯৯০৬১২৩৪৫৬৭',
+          uiLblDistrict: '৬. জেলা (জেলাঃ)',
+          uiPhDistrict: 'যেমন: বরিশাল',
+          uiLblMobile: '৭. মোবাইল নম্বর (মোবাইল নম্বরঃ)',
+          uiPhMobile: 'যেমন: ০১৭১২-৩৪৫৬৭৮',
+          uiLblValidity: '৮. মেয়াদ (মেয়াদঃ)',
+          uiPhValidity: 'যেমন: ডিসেম্বর ২০২৬',
+          uiSubmitTitle: 'ফর্ম পূরণ শেষ হলে প্রিন্টের জন্য জমা দিন',
+          uiSubmitSub: 'জমা দিলে আপনার রেডি আইডি কার্ডটি প্রিন্টের জন্য সরাসরি অ্যাডমিনের কাছে চলে যাবে',
+          uiSubmitBtn: 'আইডি কার্ড জমা দিন (প্রিন্ট শিটে পাঠান)',
+          defaultDistrict: 'বরিশাল',
+          defaultValidity: 'ডিসেম্বর ২০২৬',
+          demoBtn: 'নমুনা তথ্য বসান',
+          clearBtn: 'খালি (Blank) ফরম্যাট করুন'
+        },
+        en: {
+          hdr1: "Government of the People's Republic of Bangladesh",
+          hdr2: 'Ministry of Youth and Sports',
+          hdr3: 'Department of Youth Development',
+          projTitle: 'Employment Creation through Freelancing Training for Educated Job-Seeking Youth in 64 Districts (1st Revised) Project',
+          projFontSize: '14.5px',
+          implTitle: 'Implemented by: e-Learning & Earning Ltd.',
+          implFontSize: '19.5px',
+          mainHeading: 'TRAINEE ID CARD',
+          mainFontSize: '31px',
+          lblName: 'Name:',
+          lblId: 'ID Number:',
+          lblFather: 'Father/Spouse Name:',
+          lblBlood: 'Blood Group:',
+          lblNid: 'NID/Birth Reg. No:',
+          lblDistrict: 'District:',
+          lblMobile: 'Mobile Number:',
+          lblValidity: 'Validity:',
+          addr1: 'Head Office:',
+          addr2: 'Khaja IT Park (3rd - 7th Floor), 7 South Kalyanpur,',
+          addr3: 'Kalyanpur Bus Stop, Mirpur Road, Dhaka-1207',
+          addr4: 'Contact: +880 2226 624 771, +880 1550 666 900',
+          sigLabel: 'Authorized Signature',
+          uiPortalTitle: 'Trainee ID Card Studio',
+          uiPortalSubtitle: 'Department of Youth Development • e-Learning & Earning Ltd. (Freelancing Training Project)',
+          uiPreviewTitle: 'Live ID Card Preview (Updates automatically as you type)',
+          uiFormTitle: 'Fill Out Trainee ID Card Form',
+          uiFormSubtitle: 'Complete all fields accurately and click "Submit ID Card" below',
+          uiLangBar: '🌐 Card Language (100% Bangla / 100% English)',
+          uiFontBar: '🔤 Card & Word Font Style (6 Premium Fonts)',
+          uiLblName: '1. Trainee Full Name (Name:)',
+          uiPhName: 'e.g. Md. Rakibul Islam',
+          uiLblId: '2. ID / Roll Number (ID Number:)',
+          uiPhId: '84400071',
+          uiLblBlood: '3. Blood Group (Blood Group:)',
+          uiPhBlood: 'e.g. B+',
+          uiLblFather: '4. Father / Spouse Name',
+          uiPhFather: 'e.g. Md. Abdul Karim',
+          uiLblNid: '5. NID / Birth Reg. No.',
+          uiPhNid: 'e.g. 1999061234567',
+          uiLblDistrict: '6. District (District:)',
+          uiPhDistrict: 'e.g. Barishal',
+          uiLblMobile: '7. Mobile Number (Mobile Number:)',
+          uiPhMobile: 'e.g. 01712-345678',
+          uiLblValidity: '8. Validity (Validity:)',
+          uiPhValidity: 'e.g. December 2026',
+          uiSubmitTitle: 'Submit Your ID Card for Printing',
+          uiSubmitSub: 'Once submitted, your ready ID card will be sent directly to the Admin Print Sheet',
+          uiSubmitBtn: 'Submit ID Card (Send to Print Sheet)',
+          defaultDistrict: 'Barishal',
+          defaultValidity: 'December 2026',
+          demoBtn: 'Fill Sample Data',
+          clearBtn: 'Clear (Blank) Format'
+        }
+      };
+
+      const demoRecordsByLang = {
+        bn: {
+          id: 'c2',
+          lang: 'bn',
+          name: 'মো: রাকিবুল ইসলাম',
+          idNo: '84400071',
+          father: 'মো: আবদুল করিম',
+          blood: 'B+',
+          nid: '১৯৯৯০৬১২৩৪৫৬৭',
+          district: 'বরিশাল',
+          mobile: '০১৭১২-৩৪৫৬৭৮',
+          validity: 'ডিসেম্বর ২০২৬'
+        },
+        en: {
+          id: 'c2_en',
+          lang: 'en',
+          name: 'Md. Rakibul Islam',
+          idNo: '84400071',
+          father: 'Md. Abdul Karim',
+          blood: 'B+',
+          nid: '1999061234567',
+          district: 'Barishal',
+          mobile: '01712-345678',
+          validity: 'December 2026'
+        }
+      };
+
       let classmates = [
         {
           id: 'c1',
+          lang: 'bn',
           name: '',
           idNo: '',
           father: '',
@@ -959,8 +1150,9 @@
         },
         {
           id: 'c2',
+          lang: 'bn',
           name: 'মো: রাকিবুল ইসলাম',
-          idNo: 'ELEL-BSL-2026-015',
+          idNo: '84400071',
           father: 'মো: আবদুল করিম',
           blood: 'B+',
           nid: '১৯৯৯০৬১২৩৪৫৬৭',
@@ -970,8 +1162,9 @@
         },
         {
           id: 'c3',
+          lang: 'bn',
           name: 'সাদিয়া আফরিন মিম',
-          idNo: 'ELEL-BSL-2026-016',
+          idNo: '84400072',
           father: 'মো: মাহবুবুর রহমান',
           blood: 'O+',
           nid: '২০০১০৬৯৮৭৬৫৪৩',
@@ -1025,8 +1218,129 @@
       setTimeout(updateCardScale, 50);
       setTimeout(updateCardScale, 300);
 
+      // Apply 100% Bangla or 100% English to Card Template & UI
+      function applyCardTemplateLanguage(langCode, skipUiLabels) {
+        const L = CARD_LANG_PACK[langCode] || CARD_LANG_PACK.bn;
+        document.getElementById('hdr-line-1').textContent = L.hdr1;
+        document.getElementById('hdr-line-2').textContent = L.hdr2;
+        document.getElementById('hdr-line-3').textContent = L.hdr3;
+
+        const projEl = document.getElementById('proj-title-txt');
+        projEl.textContent = L.projTitle;
+        projEl.style.fontSize = L.projFontSize;
+
+        const implEl = document.getElementById('impl-title-txt');
+        implEl.textContent = L.implTitle;
+        implEl.style.fontSize = L.implFontSize;
+
+        const mainEl = document.getElementById('card-main-heading');
+        mainEl.textContent = L.mainHeading;
+        mainEl.style.fontSize = L.mainFontSize;
+
+        document.getElementById('lbl-name').textContent = L.lblName;
+        document.getElementById('lbl-id').textContent = L.lblId;
+        document.getElementById('lbl-father').textContent = L.lblFather;
+        document.getElementById('lbl-blood').textContent = L.lblBlood;
+        document.getElementById('lbl-nid').textContent = L.lblNid;
+        document.getElementById('lbl-district').textContent = L.lblDistrict;
+        document.getElementById('lbl-mobile').textContent = L.lblMobile;
+        document.getElementById('lbl-validity').textContent = L.lblValidity;
+
+        document.getElementById('addr-line-1').textContent = L.addr1;
+        document.getElementById('addr-line-2').textContent = L.addr2;
+        document.getElementById('addr-line-3').textContent = L.addr3;
+        document.getElementById('addr-line-4').textContent = L.addr4;
+        document.getElementById('sig-label-txt').textContent = L.sigLabel;
+
+        if (!skipUiLabels) {
+          currentLang = langCode;
+          const setTxt = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+          const setPh = (id, p) => { const el = document.getElementById(id); if (el) el.placeholder = p; };
+
+          setTxt('ui-portal-title', L.uiPortalTitle);
+          setTxt('ui-portal-subtitle', L.uiPortalSubtitle);
+          setTxt('ui-preview-title', L.uiPreviewTitle);
+          setTxt('ui-form-title', L.uiFormTitle);
+          setTxt('ui-form-subtitle', L.uiFormSubtitle);
+          setTxt('ui-lbl-lang-bar', L.uiLangBar);
+          setTxt('ui-lbl-font-bar', L.uiFontBar);
+
+          setTxt('ui-lbl-name', L.uiLblName); setPh('inp-name', L.uiPhName);
+          setTxt('ui-lbl-id', L.uiLblId); setPh('inp-id', L.uiPhId);
+          setTxt('ui-lbl-blood', L.uiLblBlood); setPh('inp-blood', L.uiPhBlood);
+          setTxt('ui-lbl-father', L.uiLblFather); setPh('inp-father', L.uiPhFather);
+          setTxt('ui-lbl-nid', L.uiLblNid); setPh('inp-nid', L.uiPhNid);
+          setTxt('ui-lbl-district', L.uiLblDistrict); setPh('inp-district', L.uiPhDistrict);
+          setTxt('ui-lbl-mobile', L.uiLblMobile); setPh('inp-mobile', L.uiPhMobile);
+          setTxt('ui-lbl-validity', L.uiLblValidity); setPh('inp-validity', L.uiPhValidity);
+
+          setTxt('ui-submit-title', L.uiSubmitTitle);
+          setTxt('ui-submit-sub', L.uiSubmitSub);
+          setTxt('ui-submit-btn-txt', L.uiSubmitBtn);
+          setTxt('btn-fill-demo', L.demoBtn);
+          setTxt('btn-clear-fields', L.clearBtn);
+
+          const isBn = langCode === 'bn';
+          const activeBtnCls = 'px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-600 text-white transition';
+          const inactiveBtnCls = 'px-2.5 py-1 rounded-md text-xs font-bold text-slate-300 hover:text-white transition';
+          const activeFormCls = 'py-1.5 px-2 rounded-md text-xs font-bold bg-emerald-600 text-white shadow transition';
+          const inactiveFormCls = 'py-1.5 px-2 rounded-md text-xs font-bold text-slate-300 hover:text-white transition';
+
+          if (document.getElementById('btn-lang-bn')) document.getElementById('btn-lang-bn').className = isBn ? activeBtnCls : inactiveBtnCls;
+          if (document.getElementById('btn-lang-en')) document.getElementById('btn-lang-en').className = !isBn ? activeBtnCls : inactiveBtnCls;
+          if (document.getElementById('btn-form-lang-bn')) document.getElementById('btn-form-lang-bn').className = isBn ? activeFormCls : inactiveFormCls;
+          if (document.getElementById('btn-form-lang-en')) document.getElementById('btn-form-lang-en').className = !isBn ? activeFormCls : inactiveFormCls;
+
+          // Auto-convert default district/validity or demo record when switching language
+          const curName = fieldMap.name.inp.value.trim();
+          if (curName === demoRecordsByLang.bn.name || curName === demoRecordsByLang.en.name) {
+            const targetDemo = demoRecordsByLang[langCode];
+            Object.keys(fieldMap).forEach(k => {
+              fieldMap[k].inp.value = targetDemo[k];
+              fieldMap[k].val.textContent = targetDemo[k];
+              if (classmates[activeIndex]) classmates[activeIndex][k] = targetDemo[k];
+            });
+          } else {
+            if (langCode === 'en') {
+              if (fieldMap.district.inp.value === 'বরিশাল') { fieldMap.district.inp.value = 'Barishal'; fieldMap.district.val.textContent = 'Barishal'; }
+              if (fieldMap.validity.inp.value === 'ডিসেম্বর ২০২৬') { fieldMap.validity.inp.value = 'December 2026'; fieldMap.validity.val.textContent = 'December 2026'; }
+            } else {
+              if (fieldMap.district.inp.value === 'Barishal') { fieldMap.district.inp.value = 'বরিশাল'; fieldMap.district.val.textContent = 'বরিশাল'; }
+              if (fieldMap.validity.inp.value === 'December 2026') { fieldMap.validity.inp.value = 'ডিসেম্বর ২০২৬'; fieldMap.validity.val.textContent = 'ডিসেম্বর ২০২৬'; }
+            }
+          }
+          if (classmates[activeIndex]) classmates[activeIndex].lang = langCode;
+        }
+      }
+
+      ['btn-lang-bn', 'btn-form-lang-bn'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', () => {
+          applyCardTemplateLanguage('bn', false);
+          showToast('১০০% বাংলা ফরম্যাট সক্রিয় করা হয়েছে');
+        });
+      });
+
+      ['btn-lang-en', 'btn-form-lang-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', () => {
+          applyCardTemplateLanguage('en', false);
+          showToast('100% English Format Activated');
+        });
+      });
+
       // Sync Form <-> Card Canvas
-      function loadRecordToEditor(rec) {
+      function loadRecordToEditor(rec, isBatchRenderOnly) {
+        if (!rec) return;
+        const recLang = rec.lang || (rec.name && /^[A-Za-z0-9\s.:,-]+$/.test(rec.name) ? 'en' : currentLang);
+        applyCardTemplateLanguage(recLang, Boolean(isBatchRenderOnly));
+        if (rec.font) {
+          cardCanvas.style.setProperty('--card-font', rec.font);
+          if (!isBatchRenderOnly) {
+            if (document.getElementById('ctrl-font-family')) document.getElementById('ctrl-font-family').value = rec.font;
+            if (document.getElementById('quick-font-select')) document.getElementById('quick-font-select').value = rec.font;
+          }
+        }
         Object.keys(fieldMap).forEach(key => {
           const v = rec[key] || '';
           fieldMap[key].inp.value = v;
@@ -1040,6 +1354,7 @@
           val.textContent = inp.value;
           if (classmates[activeIndex]) {
             classmates[activeIndex][key] = inp.value;
+            classmates[activeIndex].lang = currentLang;
             renderBatchList();
           }
         });
@@ -1047,6 +1362,7 @@
           inp.value = val.textContent;
           if (classmates[activeIndex]) {
             classmates[activeIndex][key] = val.textContent;
+            classmates[activeIndex].lang = currentLang;
             renderBatchList();
           }
         });
@@ -1054,10 +1370,13 @@
 
       // Demo & Clear buttons
       document.getElementById('btn-fill-demo').addEventListener('click', () => {
-        activeIndex = 1;
-        loadRecordToEditor(classmates[1]);
+        const demoRec = Object.assign({}, demoRecordsByLang[currentLang]);
+        if (classmates[activeIndex]) {
+          classmates[activeIndex] = Object.assign({}, classmates[activeIndex], demoRec);
+        }
+        loadRecordToEditor(demoRec, false);
         renderBatchList();
-        showToast('নমুনা প্রশিক্ষণার্থীর তথ্য বসানো হয়েছে');
+        showToast(currentLang === 'en' ? 'Sample trainee data filled (ID: 84400071)' : 'নমুনা প্রশিক্ষণার্থীর তথ্য বসানো হয়েছে (আইডি: 84400071)');
       });
 
       document.getElementById('btn-clear-fields').addEventListener('click', () => {
@@ -1067,7 +1386,7 @@
           if (classmates[activeIndex]) classmates[activeIndex][key] = '';
         });
         renderBatchList();
-        showToast('কার্ডটি সম্পূর্ণ ব্ল্যাংক (খালি ফরম্যাট) করা হয়েছে');
+        showToast(currentLang === 'en' ? 'Card cleared to blank template' : 'কার্ডটি সম্পূর্ণ ব্ল্যাংক (খালি ফরম্যাট) করা হয়েছে');
       });
 
       // Direct Edit Toggle
@@ -1079,10 +1398,28 @@
         });
       });
 
-      // Typography & Layer Controls
+      // Typography & 6 Font Options Sync (Both Quick Form Selector & Admin Design Control)
+      function applySelectedFontFamily(fontVal) {
+        cardCanvas.style.setProperty('--card-font', fontVal);
+        const f1 = document.getElementById('ctrl-font-family');
+        const f2 = document.getElementById('quick-font-select');
+        if (f1 && f1.value !== fontVal) f1.value = fontVal;
+        if (f2 && f2.value !== fontVal) f2.value = fontVal;
+        if (classmates[activeIndex]) classmates[activeIndex].font = fontVal;
+        if (isAdminLoggedIn) refreshLiveSheetPreview();
+      }
+
       document.getElementById('ctrl-font-family').addEventListener('change', (e) => {
-        cardCanvas.style.setProperty('--card-font', e.target.value);
+        applySelectedFontFamily(e.target.value);
+        showToast(currentLang === 'en' ? 'Card font style updated!' : 'কার্ডের ফন্ট স্টাইল পরিবর্তন করা হয়েছে!');
       });
+
+      if (document.getElementById('quick-font-select')) {
+        document.getElementById('quick-font-select').addEventListener('change', (e) => {
+          applySelectedFontFamily(e.target.value);
+          showToast(currentLang === 'en' ? 'Card font style updated!' : 'কার্ডের ফন্ট স্টাইল পরিবর্তন করা হয়েছে!');
+        });
+      }
 
       document.getElementById('ctrl-logo-mode').addEventListener('change', (e) => {
         const isVec = e.target.value === 'vector';
@@ -1593,20 +1930,27 @@
           ctx.restore();
         }
 
-        // 5. Project Titles & Main Heading
+        // 5. Project Titles & Main Heading (Auto-scaled for 100% Bangla & 100% English perfection)
         ctx.save();
         ctx.textAlign = 'center';
         ctx.fillStyle = '#151913';
-        ctx.font = 'bold 19.2px ' + fontFam;
-        ctx.fillText(document.getElementById('proj-title-txt').textContent.trim(), 507, 161);
+        const projTxt = document.getElementById('proj-title-txt').textContent.trim();
+        let projSz = 19.2;
+        ctx.font = 'bold ' + projSz + 'px ' + fontFam;
+        while (ctx.measureText(projTxt).width > 940 && projSz > 12.5) {
+          projSz -= 0.5;
+          ctx.font = 'bold ' + projSz + 'px ' + fontFam;
+        }
+        ctx.fillText(projTxt, 507, 161, 945);
 
         ctx.fillStyle = '#1d5924';
-        ctx.font = 'bold 20.8px ' + fontFam;
-        ctx.fillText(document.getElementById('impl-title-txt').textContent.trim(), 507, 192);
+        const implTxt = document.getElementById('impl-title-txt').textContent.trim();
+        ctx.font = 'bold ' + ( /^[A-Za-z]/.test(implTxt) ? '19.5px ' : '20.8px ' ) + fontFam;
+        ctx.fillText(implTxt, 507, 192, 920);
 
         const mainHeading = document.getElementById('card-main-heading').textContent.trim();
         ctx.fillStyle = '#151913';
-        ctx.font = '800 35px ' + fontFam;
+        ctx.font = '800 ' + ( /^[A-Za-z]/.test(mainHeading) ? '31px ' : '35px ' ) + fontFam;
         ctx.fillText(mainHeading, 507, 236);
         const hw = ctx.measureText(mainHeading).width;
         ctx.fillRect(507 - hw / 2 - 4, 244, hw + 8, 2.0);
@@ -1647,12 +1991,13 @@
             ctx.restore();
           }
 
-          // Left student value
+          // Left student value (constrained to left column width)
           const lvText = document.getElementById(r.lVal).textContent.trim();
           if (lvText) {
             ctx.fillStyle = valColor;
             ctx.font = 'bold ' + valFontSize + 'px ' + fontFam;
-            ctx.fillText(lvText, 37 + lw + 10, r.y - 2);
+            const maxLeftW = Math.max(80, 628 - (37 + lw + 10));
+            ctx.fillText(lvText, 37 + lw + 10, r.y - 2, maxLeftW);
           }
 
           // Right label
@@ -1674,12 +2019,13 @@
             ctx.restore();
           }
 
-          // Right student value
+          // Right student value (constrained to right column width)
           const rvText = document.getElementById(r.rVal).textContent.trim();
           if (rvText) {
             ctx.fillStyle = valColor;
             ctx.font = 'bold ' + valFontSize + 'px ' + fontFam;
-            ctx.fillText(rvText, 640 + rw + 10, r.y - 2);
+            const maxRightW = Math.max(60, 980 - (640 + rw + 10));
+            ctx.fillText(rvText, 640 + rw + 10, r.y - 2, maxRightW);
           }
           ctx.restore();
         });
@@ -1841,19 +2187,20 @@
         return classmates.length > 0 ? classmates : [classmates[0]];
       }
 
-      // Render Live A4 Multi-Card Sheet Preview on Screen
+      // Render Live A4 Multi-Card Sheet Preview on Screen (Fast & Only when Admin Panel is active)
       async function refreshLiveSheetPreview() {
         const previewBox = document.getElementById('live-a4-sheet-preview');
         const countBadge = document.getElementById('sheet-ready-count');
-        if (!previewBox) return;
-
-        const targets = getTargetCardsForSheet();
         const filledCount = classmates.filter(c => (c.name && c.name.trim()) || (c.idNo && c.idNo.trim())).length;
         if (countBadge) {
           countBadge.textContent = filledCount + 'টি রেডি কার্ড প্রিন্টের জন্য প্রস্তুত';
         }
+        if (!previewBox || !isAdminLoggedIn) return;
 
+        const targets = getTargetCardsForSheet();
         const savedRec = {
+          lang: currentLang,
+          font: document.getElementById('ctrl-font-family').value,
           name: fieldMap.name.inp.value,
           idNo: fieldMap.idNo.inp.value,
           father: fieldMap.father.inp.value,
@@ -1866,8 +2213,8 @@
 
         previewBox.innerHTML = '';
         for (let i = 0; i < targets.length; i++) {
-          loadRecordToEditor(targets[i]);
-          const c = await renderCardToHighResCanvas(1.2);
+          loadRecordToEditor(targets[i], true);
+          const c = await renderCardToHighResCanvas(1.0);
           const cardWrap = document.createElement('div');
           cardWrap.className = 'border border-dashed border-slate-400 p-1 rounded bg-slate-50 flex flex-col gap-1 shadow-sm';
           const img = document.createElement('img');
@@ -1875,12 +2222,12 @@
           img.className = 'w-full h-auto rounded-sm';
           const cap = document.createElement('div');
           cap.className = 'text-[10px] text-slate-700 font-semibold flex items-center justify-between px-1';
-          cap.innerHTML = '<span>#' + (i + 1) + ' ' + (targets[i].name || 'খালি কার্ড') + '</span><span class="font-mono text-slate-500">85.6×54mm</span>';
+          cap.innerHTML = '<span>#' + (i + 1) + ' ' + (targets[i].name || 'খালি কার্ড') + ' (' + (targets[i].idNo || '—') + ')</span><span class="font-mono text-slate-500">85.6×54mm</span>';
           cardWrap.appendChild(img);
           cardWrap.appendChild(cap);
           previewBox.appendChild(cardWrap);
         }
-        loadRecordToEditor(savedRec);
+        loadRecordToEditor(savedRec, false);
       }
 
       document.getElementById('btn-refresh-sheet-preview').addEventListener('click', () => {
@@ -2209,13 +2556,15 @@
       document.getElementById('btn-download-a4-png').addEventListener('click', downloadBatchA4SheetPng);
       document.getElementById('btn-panel-a4png').addEventListener('click', downloadBatchA4SheetPng);
 
-      // Exact CR80 Print (Single or Batch on 1 A4 Page)
+      // Exact CR80 Print (Single or Batch on 1 A4 Page - Guaranteed Image Load before Print Dialog)
       async function triggerBatchPrint() {
         const printArea = document.getElementById('print-sheet-area');
         printArea.innerHTML = '';
         showToast('প্রিন্ট শিট তৈরি হচ্ছে...');
 
         const savedRec = {
+          lang: currentLang,
+          font: document.getElementById('ctrl-font-family').value,
           name: fieldMap.name.inp.value,
           idNo: fieldMap.idNo.inp.value,
           father: fieldMap.father.inp.value,
@@ -2226,13 +2575,19 @@
           validity: fieldMap.validity.inp.value
         };
         const targets = getTargetCardsForSheet();
+        const loadPromises = [];
 
         for (let i = 0; i < targets.length; i++) {
-          loadRecordToEditor(targets[i]);
-          const c = await renderCardToHighResCanvas(2);
+          loadRecordToEditor(targets[i], true);
+          const c = await renderCardToHighResCanvas(2.5);
           const slot = document.createElement('div');
           slot.className = 'print-card-slot';
           const img = document.createElement('img');
+          const p = new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+          loadPromises.push(p);
           img.src = c.toDataURL('image/png');
           img.style.width = '100%';
           img.style.height = '100%';
@@ -2241,11 +2596,12 @@
           printArea.appendChild(slot);
         }
 
-        loadRecordToEditor(savedRec);
+        loadRecordToEditor(savedRec, false);
+        await Promise.all(loadPromises);
 
         setTimeout(() => {
           window.print();
-        }, 250);
+        }, 120);
       }
 
       document.getElementById('btn-print-cards').addEventListener('click', triggerBatchPrint);
@@ -2253,16 +2609,19 @@
       document.getElementById('btn-panel-print').addEventListener('click', triggerBatchPrint);
 
       function buildCurrentStudentRecord() {
+        const L = CARD_LANG_PACK[currentLang] || CARD_LANG_PACK.bn;
         return {
           id: 'st_' + Date.now(),
+          lang: currentLang,
+          font: document.getElementById('ctrl-font-family').value,
           name: fieldMap.name.inp.value.trim(),
           idNo: fieldMap.idNo.inp.value.trim(),
           father: fieldMap.father.inp.value.trim(),
           blood: fieldMap.blood.inp.value.trim(),
           nid: fieldMap.nid.inp.value.trim(),
-          district: fieldMap.district.inp.value.trim() || 'বরিশাল',
+          district: fieldMap.district.inp.value.trim() || L.defaultDistrict,
           mobile: fieldMap.mobile.inp.value.trim(),
-          validity: fieldMap.validity.inp.value.trim() || 'ডিসেম্বর ২০২৬'
+          validity: fieldMap.validity.inp.value.trim() || L.defaultValidity
         };
       }
 
@@ -2275,12 +2634,12 @@
         return clean + '/students.json';
       }
 
-      // Student Form Submission & Auto Cloud Webhook Sync (Google Sheets + Firebase + Local/WhatsApp)
-      async function submitStudentFormToAdmin() {
+      // Instant Non-Blocking Student Form Submission + Fast Background Server Sync
+      function submitStudentFormToAdmin() {
         const rec = buildCurrentStudentRecord();
 
         if (!rec.name) {
-          showToast('অনুগ্রহ করে প্রশিক্ষণার্থীর নাম লিখুন!');
+          showToast(currentLang === 'en' ? 'Please enter trainee full name!' : 'অনুগ্রহ করে প্রশিক্ষণার্থীর নাম লিখুন!');
           fieldMap.name.inp.focus();
           return;
         }
@@ -2300,9 +2659,10 @@
           }
         }
 
+        // Instant local save & UI feedback (< 50ms)
         saveBatchToStorage();
         renderBatchList();
-        refreshLiveSheetPreview();
+        if (isAdminLoggedIn) refreshLiveSheetPreview();
 
         const sBox = document.getElementById('student-submit-success-box');
         const cloudMsg = document.getElementById('student-submit-cloud-msg');
@@ -2310,57 +2670,60 @@
           sBox.classList.remove('hidden');
           sBox.classList.add('flex');
         }
-
-        // Priority 1: Check if hosted with native /api server backend
-        if (window.location.protocol.startsWith('http')) {
-          try {
-            const apiRes = await fetch(window.location.origin + '/api/submit', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(rec)
-            });
-            if (apiRes.ok) {
-              isHostedServerBackendAvailable = true;
-              updateCloudUiStatus();
-              if (cloudMsg) {
-                cloudMsg.innerHTML = '<span>✅ অভিনন্দন! আপনার আইডি কার্ড সরাসরি ওয়েবসাইটের ডাটাবেসে জমা হয়েছে!</span>';
-              }
-              showToast('অভিনন্দন! আপনার রেডি আইডি কার্ড ওয়েবসাইটের ডাটাবেসে জমা হয়েছে!');
-              return;
-            }
-          } catch (e) {}
-        }
-
-        // Priority 2: External Cloud Backend (Google Sheets / Firebase)
-        const webhookUrl = getActiveBackendUrl();
-        if (webhookUrl) {
-          try {
-            if (isFirebaseUrl(webhookUrl)) {
-              await fetch(getFirebaseEndpoint(webhookUrl), {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(rec)
-              });
-            } else {
-              await fetch(webhookUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(rec)
-              });
-            }
-            if (cloudMsg) {
-              cloudMsg.innerHTML = '<span>✅ অভিনন্দন! আপনার আইডি কার্ড সরাসরি অ্যাডমিনের ক্লাউড সার্ভারে জমা হয়েছে!</span>';
-            }
-            showToast('অভিনন্দন! আপনার রেডি আইডি কার্ড ক্লাউড সার্ভারে জমা হয়েছে!');
-            return;
-          } catch (err) {}
-        }
-
         if (cloudMsg) {
-          cloudMsg.innerHTML = '<span>✅ আপনার কার্ড রেডি! এখন নিচের WhatsApp বা কোড কপি বাটনে চাপ দিয়ে অ্যাডমিনকে পাঠান:</span>';
+          cloudMsg.innerHTML = currentLang === 'en'
+            ? '<span>✅ Your ID Card is submitted &amp; ready! Syncing to Admin Server...</span>'
+            : '<span>✅ আপনার আইডি কার্ড প্রস্তুত ও জমা হয়েছে! অ্যাডমিন সার্ভারে পাঠানো হচ্ছে...</span>';
         }
-        showToast('আপনার কার্ড প্রস্তুত! নিচের বাটনে চাপ দিয়ে অ্যাডমিনকে পাঠিয়ে দিন।');
+        showToast(currentLang === 'en' ? 'ID Card submitted! Syncing to server...' : 'আপনার আইডি কার্ড জমা হয়েছে!');
+
+        // Background non-blocking network sync
+        (async function backgroundSyncSubmission() {
+          if (window.location.protocol.startsWith('http')) {
+            for (let attempt = 0; attempt < 2; attempt++) {
+              try {
+                const apiRes = await fetch(window.location.origin + '/api/submit', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(rec)
+                });
+                if (apiRes.ok) {
+                  isHostedServerBackendAvailable = true;
+                  updateCloudUiStatus();
+                  if (cloudMsg) {
+                    cloudMsg.innerHTML = currentLang === 'en'
+                      ? '<span>✅ Congratulations! Your ID card is saved directly to the Website Database!</span>'
+                      : '<span>✅ অভিনন্দন! আপনার আইডি কার্ড সরাসরি ওয়েবসাইটের ডাটাবেসে জমা হয়েছে!</span>';
+                  }
+                  return;
+                }
+              } catch (e) {}
+            }
+          }
+
+          const webhookUrl = getActiveBackendUrl();
+          if (webhookUrl) {
+            try {
+              if (isFirebaseUrl(webhookUrl)) {
+                await fetch(getFirebaseEndpoint(webhookUrl), {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(rec)
+                });
+              } else {
+                await fetch(webhookUrl, {
+                  method: 'POST',
+                  mode: 'no-cors',
+                  headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                  body: JSON.stringify(rec)
+                });
+              }
+              if (cloudMsg) {
+                cloudMsg.innerHTML = '<span>✅ অভিনন্দন! আপনার আইডি কার্ড সরাসরি অ্যাডমিনের ক্লাউড সার্ভারে জমা হয়েছে!</span>';
+              }
+            } catch (err) {}
+          }
+        })();
       }
 
       document.getElementById('btn-student-submit').addEventListener('click', submitStudentFormToAdmin);
@@ -2775,10 +3138,23 @@ function doGet(e) {
       });
 
       // Initialize Editor with Blank Template (Record 0) in Public Student Mode first
-      loadRecordToEditor(classmates[0]);
+      loadRecordToEditor(classmates[0], false);
       renderBatchList();
       applyRoleMode(false);
       checkServerBackendAvailability();
+
+      // Keep Render server awake (ping every 3.5 minutes) & Auto-poll new student submissions when Admin is logged in
+      setInterval(() => {
+        if (window.location.protocol.startsWith('http')) {
+          fetch(window.location.origin + '/api/health').catch(() => {});
+        }
+      }, 210000);
+
+      setInterval(() => {
+        if (isAdminLoggedIn && (isHostedServerBackendAvailable || getActiveBackendUrl())) {
+          syncCloudSubmissionsNow(true);
+        }
+      }, 8000);
     })();
   </script>
 </body>
